@@ -1,11 +1,11 @@
 import { Arg, Authorized, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
 import { Int } from "type-graphql";
 
-import { Product } from "../entities/product";
+import { TipoServicio } from "../entities/tipo-servicio";
 import { RolesTypes } from "../entities/user";
 
 @InputType()
-class ProductInput {
+class TipoServicioInput {
     @Field()
     name!: string
     @Field()
@@ -13,46 +13,46 @@ class ProductInput {
 }
 
 @Resolver()
-export class ProductResolver {
+export class TipoServicioResolver {
     @Authorized()
-    @Mutation(() => Product)
-    async createProduct(
-        @Arg("data", () => ProductInput) data: ProductInput
+    @Mutation(() => TipoServicio)
+    async createTipoServicio(
+        @Arg("data", () => TipoServicioInput) data: TipoServicioInput
     ) {
-        const newData = Product.create(data);
+        const newData = TipoServicio.create(data);
         return await newData.save();
     }
 
     @Authorized()
-    @Mutation(() => Product)
-    async updateProduct(
+    @Mutation(() => TipoServicio)
+    async updateTipoServicio(
         @Arg("id", () => Int) id: number,
-        @Arg("data", () => ProductInput) data: ProductInput
+        @Arg("data", () => TipoServicioInput) data: TipoServicioInput
     ) {
-        await Product.update({ id }, data);
-        const dataUpdated = await Product.findOne(id)
+        await TipoServicio.update({ id }, data);
+        const dataUpdated = await TipoServicio.findOne(id)
         return dataUpdated;
     }
 
     @Authorized(RolesTypes.ADMIN)
     @Mutation(() => Boolean)
-    async deleteProduct(
+    async deleteTipoServicio(
         @Arg("id", () => Int) id: number
     ) {
-        await Product.delete(id);
+        await TipoServicio.delete(id);
         return true;
     }
 
-    @Query(() => [Product])
-    products() {
-        return Product.find()
+    @Query(() => [TipoServicio])
+    TipoServicios() {
+        return TipoServicio.find()
     }
 
-    @Query(() => [Product])
-    productById(
+    @Query(() => [TipoServicio])
+    TipoServicioById(
         @Arg("id", () => Int) id: number
     ) {
-        return Product.findOne(
+        return TipoServicio.findOne(
             {
                 where: {
                     id
