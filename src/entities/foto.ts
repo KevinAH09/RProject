@@ -1,8 +1,10 @@
 import { validateOrReject } from "class-validator";
-import { Field, ID } from "type-graphql";
-import { BaseEntity, PrimaryGeneratedColumn , BeforeInsert, Column, CreateDateColumn} from "typeorm";
+import { Field, ID, ObjectType } from "type-graphql";
+import { BaseEntity, PrimaryGeneratedColumn , BeforeInsert, Column, CreateDateColumn, Entity} from "typeorm";
 import { EntityStates } from "../enums/entity-states.enum";
 
+@ObjectType()
+@Entity()
 class Foto extends BaseEntity {
      
     @Field(() => ID)
@@ -17,7 +19,7 @@ class Foto extends BaseEntity {
     @Column()
     base64!:string;
 
-    
+
 
     @Field(() => String)
     @CreateDateColumn({ type: 'timestamp' })

@@ -3,6 +3,7 @@ import { Field, Int, ObjectType} from "type-graphql";
 import { validateOrReject } from 'class-validator';
 import { EntityStates } from '../enums/entity-states.enum';
 import { TipoServicio } from './tipo-servicio';
+import { TipoBeneficio } from './tipo-beneficio';
 
 @ObjectType()
 @Entity()
@@ -20,9 +21,9 @@ export class Propiedad extends BaseEntity{
     @ManyToMany(() => TipoServicio, servicio=> servicio.propiedades)
     servicios!:TipoServicio[]
 
-    @Field(()=>[TipoServicio])
-    @ManyToMany(() => TipoServicio, beneficios=> beneficios.propiedades)
-    beneficios!:TipoServicio[]
+    @Field(()=>[TipoBeneficio])
+    @ManyToMany(() => TipoBeneficio, beneficio=> beneficio.propiedades)
+    beneficios!:TipoBeneficio[]
 
     @Field(() => EntityStates)
     @Column()

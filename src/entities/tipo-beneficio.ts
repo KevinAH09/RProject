@@ -18,7 +18,7 @@ export class TipoBeneficio extends BaseEntity{
 
     @Field(()=>[Propiedad])
     @ManyToMany(() => Propiedad, propiedad=> propiedad.beneficios)
-    beneficios!:Propiedad[]
+    propiedades!:Propiedad[]
 
 
     @Field(() => EntityStates)
