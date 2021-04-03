@@ -19,7 +19,7 @@ import { sign } from "jsonwebtoken";
 
 import { isAuthenticated } from "../middleware/is-authenticated";
 import { Context } from "../interfaces/context.interface";
-import { RolesTypes } from "../entities/usuario"
+import { RolesTypes } from "../enums/role-types.enum";
 
 @ObjectType()
 class LoginResponse {

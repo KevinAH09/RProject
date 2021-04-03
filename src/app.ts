@@ -5,13 +5,13 @@ import { buildSchema } from "type-graphql"
 
 import { PingResolver } from "./resolvers/ping.resolver";
 import { TipoServicioResolver } from "./resolvers/product.resolver";
-import { UserResolver } from './resolvers/user.resolver';
+import { UsuarioResolver } from './resolvers/usuario.resolver';
 import { isAuthorizated } from "./middleware/is-authorizated";
 export async function startServer() {
     const app = express();
     const server = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [PingResolver, TipoServicioResolver, UserResolver],
+            resolvers: [PingResolver, TipoServicioResolver, UsuarioResolver],
             authChecker: isAuthorizated
         }),
         context: ({ req, res }) => ({ req, res }),

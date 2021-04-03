@@ -1,29 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 import { ObjectType, Field, ID, Authorized, registerEnumType } from "type-graphql";
-
-export enum RolesTypes {
-    NONE = "",
-    ADMIN = "ADMIN",
-    MODERATOR = "MODERATOR",
-    BASIC = "BASIC"
-}
-
-registerEnumType(RolesTypes, {
-    name: "RolesTypes",
-    description: "Roles types of the application",
-    valuesConfig: {
-        BASIC: {
-            description: "Basic user role",
-            deprecationReason: "Replaced with @Authorized() for simplicity",
-        },
-        MODERATOR: {
-            description: "Moderator user role",
-        },
-        ADMIN: {
-            description: "Admin user role",
-        },
-    },
-});
+import { RolesTypes } from "../enums/role-types.enum";
 
 @ObjectType()
 @Entity()
@@ -37,10 +14,10 @@ export class Usuario extends BaseEntity {
     @Column("text", { nullable: true })
     name!: string;
 
-    @Authorized([RolesTypes.ADMIN, RolesTypes.MODERATOR])
+    @Authorized([RolesTypes.ADMIN, RolesTypes.AGENTE])
     @Field(() => String)
     @Column("text", { nullable: true })
-    notes!: string;
+    telefono!: string;
 
     @Field(() => String)
     @Column("text", { nullable: true })

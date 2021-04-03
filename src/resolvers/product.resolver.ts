@@ -2,7 +2,7 @@ import { Arg, Authorized, Field, InputType, Mutation, Query, Resolver } from "ty
 import { Int } from "type-graphql";
 
 import { TipoServicio } from "../entities/tipo-servicio";
-import { RolesTypes } from "../entities/user";
+import { RolesTypes } from "../enums/role-types.enum";
 
 @InputType()
 class TipoServicioInput {
