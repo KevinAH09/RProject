@@ -13,7 +13,7 @@ export class TipoServicio extends BaseEntity{
    
     @Field()
     @Column()
-    name!:string;
+    nombre!:string;
 
 
     @Field(()=>[Propiedad])

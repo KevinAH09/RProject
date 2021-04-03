@@ -1,8 +1,9 @@
-import {Entity, Column, PrimaryGeneratedColumn,BaseEntity, CreateDateColumn, BeforeInsert, BeforeUpdate, ManyToMany} from 'typeorm';
-import { ObjectType, Field, Int } from "type-graphql";
 import { validateOrReject } from 'class-validator';
+import { Field, Int, ObjectType } from "type-graphql";
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { EntityStates } from '../enums/entity-states.enum';
 import { Propiedad } from './propiedad';
+import { TipoConstruccion } from './tipo-construccion';
 
 
 
@@ -17,6 +18,10 @@ export class Construccion extends BaseEntity {
     @ManyToMany(() => Propiedad, propiedad=> propiedad.servicios)
     propiedades!:Propiedad[]
 
+    @ManyToOne(()=> TipoConstruccion, tipoConstruccion => tipoConstruccion.construcciones)
+    @Field(()=>TipoConstruccion)
+    tipoConstruccion!: TipoConstruccion;
+
     @Field(() => EntityStates)
     @Column()
     state!: EntityStates
@@ -29,13 +34,13 @@ export class Construccion extends BaseEntity {
     @CreateDateColumn({ type: 'timestamp' })
     updateAt!: string
 
-    @Field()
-    @Column()
-    metro_cuadrado!: number;
+    @Field(()=>Int)
+    @Column('float', { nullable: true })
+    metroCuadrado!: number;
 
-    @Field()
-    @Column("text", { nullable: true })
-    descripcion!: string;
+    @Field(()=>Int)
+    @Column('int', { nullable: true })
+    descripcion!: number;
 
     @Field()
     @Column("text", { nullable: true })

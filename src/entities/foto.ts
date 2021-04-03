@@ -1,7 +1,9 @@
 import { validateOrReject } from "class-validator";
 import { Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, PrimaryGeneratedColumn , BeforeInsert, Column, CreateDateColumn, Entity} from "typeorm";
+import { BaseEntity, PrimaryGeneratedColumn , BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne} from "typeorm";
 import { EntityStates } from "../enums/entity-states.enum";
+import { Propiedad } from "./propiedad";
+import { Propietario } from "./propietario";
 
 @ObjectType()
 @Entity()
@@ -18,6 +20,10 @@ export class Foto extends BaseEntity {
     @Field()
     @Column()
     base64!:string;
+
+    @ManyToOne(()=> Propiedad, propiedad => propiedad.fotos)
+    @Field(()=>Propiedad)
+    propiedad!: Propiedad;
 
     // @OneToMany(type => Family, family => family.childhood)
     // @Field({ type: () => [Family] })
