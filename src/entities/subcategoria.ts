@@ -1,34 +1,25 @@
-import {Entity, Column, PrimaryGeneratedColumn,BaseEntity, CreateDateColumn, BeforeInsert, BeforeUpdate, ManyToMany} from 'typeorm';
-import { Field, Int, ObjectType} from "type-graphql";
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, BeforeInsert, BeforeUpdate, OneToMany } from 'typeorm';
+import { Field, Int, ObjectType } from "type-graphql";
 import { validateOrReject } from 'class-validator';
 import { EntityStates } from '../enums/entity-states.enum';
-import { TipoServicio } from './tipo-servicio';
-import { TipoBeneficio } from './tipo-beneficio';
 import { Categoria } from './categoria';
+
 
 @ObjectType()
 @Entity()
-export class Propiedad extends BaseEntity{
+export class Subcategoria extends BaseEntity {
     @Field()
     @PrimaryGeneratedColumn()
-    id!:number;
-   
+    id!: number;
+
     @Field()
     @Column()
-    name!:string;
+    nombre!: string;
 
 
-    @Field(()=>[TipoServicio])
-    @ManyToMany(() => TipoServicio, servicio=> servicio.propiedades)
-    servicios!:TipoServicio[]
-
-    @Field(()=>[TipoBeneficio])
-    @ManyToMany(() => TipoBeneficio, beneficio=> beneficio.propiedades)
-    beneficios!:TipoBeneficio[]
-
-    @Field(()=>[Categoria])
-    @ManyToMany(() => Categoria, categoria=> categoria.propiedades)
-    categorias!:Categoria[]
+    @Field(() => [Categoria])
+    @OneToMany(() => Categoria, categoria => categoria.subcategorias)
+    categorias!: Categoria[]
 
     @Field(() => EntityStates)
     @Column()

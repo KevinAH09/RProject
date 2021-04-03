@@ -1,34 +1,30 @@
-import {Entity, Column, PrimaryGeneratedColumn,BaseEntity, CreateDateColumn, BeforeInsert, BeforeUpdate, ManyToMany} from 'typeorm';
-import { Field, Int, ObjectType} from "type-graphql";
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, BeforeInsert, BeforeUpdate, ManyToMany, ManyToOne } from 'typeorm';
+import { Field, Int, ObjectType } from "type-graphql";
 import { validateOrReject } from 'class-validator';
 import { EntityStates } from '../enums/entity-states.enum';
-import { TipoServicio } from './tipo-servicio';
-import { TipoBeneficio } from './tipo-beneficio';
-import { Categoria } from './categoria';
+import { Propiedad } from './propiedad';
+import { Subcategoria } from './subcategoria';
+// import { TipoServicio } from './tipo-servicio';
 
 @ObjectType()
 @Entity()
-export class Propiedad extends BaseEntity{
+export class Categoria extends BaseEntity {
     @Field()
     @PrimaryGeneratedColumn()
-    id!:number;
-   
+    id!: number;
+
     @Field()
     @Column()
-    name!:string;
+    nombre!: string;
 
 
-    @Field(()=>[TipoServicio])
-    @ManyToMany(() => TipoServicio, servicio=> servicio.propiedades)
-    servicios!:TipoServicio[]
+    @Field(() => [Subcategoria])
+    @ManyToOne(() => Subcategoria, subcategoria => subcategoria.categorias)
+    subcategorias!: Subcategoria[]
 
-    @Field(()=>[TipoBeneficio])
-    @ManyToMany(() => TipoBeneficio, beneficio=> beneficio.propiedades)
-    beneficios!:TipoBeneficio[]
-
-    @Field(()=>[Categoria])
-    @ManyToMany(() => Categoria, categoria=> categoria.propiedades)
-    categorias!:Categoria[]
+    @Field(() => [Propiedad])
+    @ManyToMany(() => Propiedad, propiedad => propiedad.categorias)
+    propiedades!: Propiedad[]
 
     @Field(() => EntityStates)
     @Column()
