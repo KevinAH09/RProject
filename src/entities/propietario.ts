@@ -21,7 +21,7 @@ export class Propietario extends BaseEntity {
 
     @Field()
     @Column()
-    correo!: string;
+    email!: string;
 
 
 
