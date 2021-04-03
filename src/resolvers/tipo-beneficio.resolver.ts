@@ -8,8 +8,6 @@ import { RolesTypes } from "../enums/role-types.enum";
 class TipoBeneficioInput {
     @Field()
     name!: string
-    @Field()
-    quantity!: number
 }
 
 @Resolver()

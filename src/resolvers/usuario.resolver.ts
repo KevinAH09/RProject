@@ -35,6 +35,9 @@ class UsuarioInput {
     @Field()
     notes!: string;
 
+    @Field()
+    telefono!: string;
+
     @Field(type => RolesTypes)
     role!: RolesTypes;
 }

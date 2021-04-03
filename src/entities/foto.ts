@@ -13,14 +13,21 @@ export class Foto extends BaseEntity {
 
     @Field()
     @Column()
-    tags!:string;
+    tag!:string;
     
     @Field()
     @Column()
     base64!:string;
 
-    
+    // @OneToMany(type => Family, family => family.childhood)
+    // @Field({ type: () => [Family] })
+    // family: Family[];
 
+    // @ManyToOne(type => Childhood, childhood => childhood.family)
+    // @Field({type: () => Childhood})
+    // childhood(): Childhood {
+    //     return Childhood.findOneById(1);
+    // };
 
     @Field(() => String)
     @CreateDateColumn({ type: 'timestamp' })
