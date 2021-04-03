@@ -29,28 +29,35 @@ export class Construccion extends BaseEntity {
     @CreateDateColumn({ type: 'timestamp' })
     updateAt!: string
 
-    @Field(() => String)
-    @Column("text", { nullable: true })
+    @Field()
+    @Column()
     metro_cuadrado!: number;
 
+    @Field()
     @Column("text", { nullable: true })
     descripcion!: string;
 
+    @Field()
     @Column("text", { nullable: true })
     bano!: string;
 
+    @Field()
     @Column("text", { nullable: true })
     sala!: string;
 
+    @Field()
     @Column("text", { nullable: true })
     planta!: string;
 
+    @Field()
     @Column("text", { nullable: true })
     cocina!: string;
 
+    @Field()
     @Column("text", { nullable: true })
     dormitorio!: string;
 
+    @Field()
     @Column("text", { nullable: true })
     material!: string;
 

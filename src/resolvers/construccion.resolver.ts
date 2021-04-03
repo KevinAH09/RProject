@@ -8,6 +8,29 @@ import { Construccion } from "../entities/construccion";
 class ConstruccionInput {
     @Field()
     name!: string
+
+    @Field()
+    metro_cuadrado!: number
+
+    @Field()
+    descripcion!: string;
+    @Field()
+    bano!: string;
+
+    @Field()
+    sala!: string;
+
+    @Field()
+    planta!: string;
+
+    @Field()
+    cocina!: string;
+
+    @Field()
+    dormitorio!: string;
+
+    @Field()
+    material!: string;
    
 }
 

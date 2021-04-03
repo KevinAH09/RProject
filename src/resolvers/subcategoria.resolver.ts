@@ -8,8 +8,7 @@ import { RolesTypes } from "../enums/role-types.enum";
 class SubcategoriaInput {
     @Field()
     nombre!: string
-    // @Field()
-    // quantity!: number
+    
 }
 
 @Resolver()
