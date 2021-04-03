@@ -16,7 +16,7 @@ class CategoriaInput {
 export class CategoriaResolver {
     @Authorized()
     @Mutation(() => Categoria)
-    async createTipoServicio(
+    async createCategoria(
         @Arg("data", () => CategoriaInput) data: CategoriaInput
     ) {
         const newData = Categoria.create(data);
@@ -25,7 +25,7 @@ export class CategoriaResolver {
 
     @Authorized()
     @Mutation(() => Categoria)
-    async updateTipoServicio(
+    async updateCategoria(
         @Arg("id", () => Int) id: number,
         @Arg("data", () => CategoriaInput) data: CategoriaInput
     ) {
@@ -36,7 +36,7 @@ export class CategoriaResolver {
 
     @Authorized(RolesTypes.ADMIN)
     @Mutation(() => Boolean)
-    async deleteTipoServicio(
+    async deleteCategoria(
         @Arg("id", () => Int) id: number
     ) {
         await Categoria.delete(id);
@@ -44,12 +44,12 @@ export class CategoriaResolver {
     }
 
     @Query(() => [Categoria])
-    TipoServicios() {
+    Categorias() {
         return Categoria.find()
     }
 
     @Query(() => [Categoria])
-    TipoServicioById(
+    CategoriaById(
         @Arg("id", () => Int) id: number
     ) {
         return Categoria.findOne(

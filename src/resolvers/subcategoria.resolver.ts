@@ -15,7 +15,7 @@ class SubcategoriaInput {
 export class SubcategoriaResolver {
     @Authorized()
     @Mutation(() => Subcategoria)
-    async createTipoServicio(
+    async createSubcategoria(
         @Arg("data", () => SubcategoriaInput) data: SubcategoriaInput
     ) {
         const newData = Subcategoria.create(data);
@@ -24,7 +24,7 @@ export class SubcategoriaResolver {
 
     @Authorized()
     @Mutation(() => Subcategoria)
-    async updateTipoServicio(
+    async updateSubcategoria(
         @Arg("id", () => Int) id: number,
         @Arg("data", () => SubcategoriaInput) data: SubcategoriaInput
     ) {
@@ -35,7 +35,7 @@ export class SubcategoriaResolver {
 
     @Authorized(RolesTypes.ADMIN)
     @Mutation(() => Boolean)
-    async deleteTipoServicio(
+    async deleteSubcategoria(
         @Arg("id", () => Int) id: number
     ) {
         await Subcategoria.delete(id);
@@ -43,12 +43,12 @@ export class SubcategoriaResolver {
     }
 
     @Query(() => [Subcategoria])
-    TipoServicios() {
+    Subcategorias() {
         return Subcategoria.find()
     }
 
     @Query(() => [Subcategoria])
-    TipoServicioById(
+    SubcategoriaById(
         @Arg("id", () => Int) id: number
     ) {
         return Subcategoria.findOne(
