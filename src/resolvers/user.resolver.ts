@@ -12,14 +12,14 @@ import {
     Authorized
 } from "type-graphql";
 import { hash, compare } from "bcryptjs";
-import { User } from "../entities/user";
+import { Usuario} from "../entities/usuario";
 
 import enviroment from "../config/enviroments.config";
 import { sign } from "jsonwebtoken";
 
 import { isAuthenticated } from "../middleware/is-authenticated";
 import { Context } from "../interfaces/context.interface";
-import { RolesTypes } from "../entities/user"
+import { RolesTypes } from "../entities/usuario"
 
 @ObjectType()
 class LoginResponse {
@@ -28,7 +28,7 @@ class LoginResponse {
 }
 
 @InputType({ description: "Editable user information" })
-class UserInput {
+class UsuarioInput {
     @Field({ nullable: true })
     name?: string
 
@@ -41,28 +41,28 @@ class UserInput {
 
 
 @Resolver()
-export class UserResolver {
-    @Query(() => [User])
+export class UsuarioResolver {
+    @Query(() => [Usuario])
     async users() {
-        return User.find();
+        return Usuario.find();
     }
     @Authorized("ADMIN")
-    @Mutation(() => User)
+    @Mutation(() => Usuario)
     async updateUser(
         @Arg("id", () => Int) id: number,
-        @Arg("data", () => UserInput) data: UserInput
+        @Arg("data", () => UsuarioInput) data: UsuarioInput
     ) {
-        await User.update({ id }, data);
-        const dataUpdated = await User.findOne(id);
+        await Usuario.update({ id }, data);
+        const dataUpdated = await Usuario.findOne(id);
         return dataUpdated;
     }
 
     @Query(() => String)
     @UseMiddleware(isAuthenticated)
-    async Me(@Ctx() { user }: Context) {
-        console.log(JSON.stringify(user));
+    async Me(@Ctx() { usuario }: Context) {
+        console.log(JSON.stringify(usuario));
 
-        return `Your user id : ${user!.id}`;
+        return `Your user id : ${usuario!.id}`;
     }
 
     @Mutation(() => Boolean)
@@ -73,7 +73,7 @@ export class UserResolver {
     ) {
         const hashedPassword = await hash(password, 13);
         try {
-            await User.insert({
+            await Usuario.insert({
                 name,
                 email,
                 password: hashedPassword
@@ -88,7 +88,7 @@ export class UserResolver {
 
     @Mutation(() => LoginResponse)
     async Login(@Arg("email") email: string, @Arg("password") password: string) {
-        const user = await User.findOne({ where: { email } });
+        const user = await Usuario.findOne({ where: { email } });
 
         if (!user) {
             throw new Error("Could not find user");
