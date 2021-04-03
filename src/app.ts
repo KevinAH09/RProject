@@ -11,12 +11,14 @@ import { CategoriaResolver } from './resolvers/categoria.resolver';
 import { SubcategoriaResolver } from './resolvers/subcategoria.resolver';
 import { isAuthorizated } from "./middleware/is-authorizated";
 import { FotoResolver } from './resolvers/foto.resolver';
+import {  PropietarioResolver} from './resolvers/propietario.resolver';
+
 
 export async function startServer() {
     const app = express();
     const server = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [TipoServicioResolver, TipoBeneficioResolver,UsuarioResolver,ConstruccionResolver,CategoriaResolver,SubcategoriaResolver,FotoResolver],
+            resolvers: [PropietarioResolver,TipoServicioResolver, TipoBeneficioResolver,UsuarioResolver,ConstruccionResolver,CategoriaResolver,SubcategoriaResolver,FotoResolver],
             authChecker: isAuthorizated
         }),
         context: ({ req, res }) => ({ req, res }),
