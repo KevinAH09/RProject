@@ -7,7 +7,7 @@ import { RolesTypes } from "../enums/role-types.enum";
 @InputType()
 class TipoServicioInput {
     @Field()
-    name!: string
+    nombre!: string
     
 }
 

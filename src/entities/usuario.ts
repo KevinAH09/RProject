@@ -12,7 +12,7 @@ export class Usuario extends BaseEntity {
     @Authorized()
     @Field(() => String)
     @Column("text", { nullable: true })
-    name!: string;
+    nombre!: string;
 
     @Authorized([RolesTypes.ADMIN, RolesTypes.AGENTE])
     @Field(() => String)

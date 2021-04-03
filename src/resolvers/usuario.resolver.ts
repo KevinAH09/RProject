@@ -30,7 +30,7 @@ class LoginResponse {
 @InputType({ description: "Editable user information" })
 class UsuarioInput {
     @Field({ nullable: true })
-    name?: string
+    nombre?: string
 
     @Field()
     notes!: string;
@@ -65,19 +65,19 @@ export class UsuarioResolver {
     async Me(@Ctx() { usuario }: Context) {
         console.log(JSON.stringify(usuario));
 
-        return `Your user id : ${usuario!.id}`;
+        return `El usuario id : ${usuario!.id}`;
     }
 
     @Mutation(() => Boolean)
     async Register(
-        @Arg("name") name: string,
+        @Arg("nombre") nombre: string,
         @Arg("email") email: string,
         @Arg("password") password: string
     ) {
         const hashedPassword = await hash(password, 13);
         try {
             await Usuario.insert({
-                name,
+                nombre,
                 email,
                 password: hashedPassword
             });
@@ -91,20 +91,20 @@ export class UsuarioResolver {
 
     @Mutation(() => LoginResponse)
     async Login(@Arg("email") email: string, @Arg("password") password: string) {
-        const user = await Usuario.findOne({ where: { email } });
+        const usuario = await Usuario.findOne({ where: { email } });
 
-        if (!user) {
-            throw new Error("Could not find user");
+        if (!usuario) {
+            throw new Error("Could not find usuario");
         }
 
-        const verify = await compare(password, user.password);
+        const verify = await compare(password, usuario.password);
 
         if (!verify) {
             throw new Error("Bad password");
         }
 
         return {
-            accessToken: sign({ user: user }, enviroment.jwtSecretKey, {
+            accessToken: sign({ usuario: usuario }, enviroment.jwtSecretKey, {
                 expiresIn: "10h"
             })
         };
