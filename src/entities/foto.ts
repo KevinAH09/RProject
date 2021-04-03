@@ -5,7 +5,7 @@ import { EntityStates } from "../enums/entity-states.enum";
 
 @ObjectType()
 @Entity()
-class Foto extends BaseEntity {
+export class Foto extends BaseEntity {
      
     @Field(() => ID)
     @PrimaryGeneratedColumn()
@@ -19,6 +19,7 @@ class Foto extends BaseEntity {
     @Column()
     base64!:string;
 
+    
 
 
     @Field(() => String)
