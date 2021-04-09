@@ -5,6 +5,7 @@ import { EntityStates } from '../enums/entity-states.enum';
 import { Categoria } from './categoria';
 import { Construccion } from './construccion';
 import { Foto } from './foto';
+import { Propietario } from './propietario';
 import { TipoBeneficio } from './tipo-beneficio';
 import { TipoServicio } from './tipo-servicio';
 
@@ -35,6 +36,10 @@ export class Propiedad extends BaseEntity{
     @Field(()=>[Construccion])
     @ManyToMany(() => Construccion, construccion=> construccion.propiedades)
     construncciones!:Construccion[]
+
+    @Field(()=>[Propietario])
+    @ManyToMany(() => Propietario, ropietario=> ropietario.propiedades)
+    propietarios!:Propietario[]
 
     @Field(() => [Foto] )
     @OneToMany(() => Foto, foto => foto.propiedad)

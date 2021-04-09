@@ -1,7 +1,5 @@
 import { Arg, Authorized, Field, InputType, Int, Mutation, Query, Resolver } from "type-graphql";
-import { Propiedad } from "../entities/propiedad";
 import { TipoBeneficio } from "../entities/tipo-beneficio";
-import { EntityStates } from "../enums/entity-states.enum";
 import { RolesTypes } from "../enums/role-types.enum";
 
 
@@ -9,13 +7,6 @@ import { RolesTypes } from "../enums/role-types.enum";
 class TipoBeneficioInput {
     @Field()
     nombre!: string;
-
-
-    @Field(()=>[Propiedad])
-    propiedades!:Propiedad[];
-
-    @Field()
-    state!: EntityStates;
 
 
 }

@@ -1,8 +1,5 @@
 import { Arg, Authorized, Field, InputType, Int, Mutation, Query, Resolver } from "type-graphql";
 import { Construccion } from "../entities/construccion";
-import { Propiedad } from "../entities/propiedad";
-import { TipoConstruccion } from "../entities/tipo-construccion";
-import { EntityStates } from "../enums/entity-states.enum";
 
 // import { RolesTypes } from "../enums/role-types.enum";
 
@@ -10,16 +7,6 @@ import { EntityStates } from "../enums/entity-states.enum";
 class ConstruccionInput {
     @Field()
     id!: number;
-
-    @Field()
-    propiedades!:Propiedad;
-
-    @Field()
-    tipoConstruccion!: TipoConstruccion;
-
-    @Field()
-    state!: EntityStates
-
 
     @Field()
     metroCuadrado!: number;
@@ -45,7 +32,8 @@ class ConstruccionInput {
     @Field()
     material!: string;
 
-   
+    @Field()
+    garage!: string;
    
 }
 

@@ -1,7 +1,8 @@
 import { validateOrReject } from "class-validator";
 import { Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { EntityStates } from "../enums/entity-states.enum";
+import { Propiedad } from "./propiedad";
 
 @ObjectType()
 @Entity()
@@ -24,17 +25,9 @@ export class Propietario extends BaseEntity {
     email!: string;
 
   
-
-
-    // @OneToMany(type => Family, family => family.childhood)
-    // @Field({ type: () => [Family] })
-    // family: Family[];
-
-    // @ManyToOne(type => Childhood, childhood => childhood.family)
-    // @Field({type: () => Childhood})
-    // childhood(): Childhood {
-    //     return Childhood.findOneById(1);
-    // };
+    @Field(()=>[Propiedad])
+    @ManyToMany(() => Propiedad, propiedad=> propiedad.propietarios)
+    propiedades!:Propiedad[];
 
     @Field(() => String)
     @CreateDateColumn({ type: 'timestamp' })

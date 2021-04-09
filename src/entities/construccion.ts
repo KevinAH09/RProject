@@ -66,6 +66,10 @@ export class Construccion extends BaseEntity {
     @Column("text", { nullable: true })
     material!: string;
 
+    @Field()
+    @Column("text", { nullable: true })
+    garage!: string;
+
     @BeforeInsert()
     async beforeInsert() {
         this.createdAt = new Date().valueOf().toString()
