@@ -1,19 +1,32 @@
-import { Arg, Authorized, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
-import { Int } from "type-graphql";
-
+import { Arg, Authorized, Field, InputType, Int, Mutation, Query, Resolver } from "type-graphql";
 import { Construccion } from "../entities/construccion";
+import { Propiedad } from "../entities/propiedad";
+import { TipoConstruccion } from "../entities/tipo-construccion";
+import { EntityStates } from "../enums/entity-states.enum";
+
 // import { RolesTypes } from "../enums/role-types.enum";
 
 @InputType()
 class ConstruccionInput {
     @Field()
-    name!: string
+    id!: number;
 
     @Field()
-    metro_cuadrado!: number
+    propiedades!:Propiedad;
 
     @Field()
-    descripcion!: string;
+    tipoConstruccion!: TipoConstruccion;
+
+    @Field()
+    state!: EntityStates
+
+
+    @Field()
+    metroCuadrado!: number;
+
+    @Field()
+    descripcion!: number;
+
     @Field()
     bano!: string;
 
@@ -31,6 +44,8 @@ class ConstruccionInput {
 
     @Field()
     material!: string;
+
+   
    
 }
 
