@@ -14,9 +14,9 @@ export class Construccion extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Field(()=>[Propiedad])
-    @ManyToMany(() => Propiedad, propiedad=> propiedad.servicios)
-    propiedades!:Propiedad[]
+    @Field(()=>Propiedad)
+    @ManyToMany(() => Propiedad, propiedad=> propiedad.construncciones)
+    propiedades!:Propiedad;
 
     @ManyToOne(()=> TipoConstruccion, tipoConstruccion => tipoConstruccion.construcciones)
     @Field(()=>TipoConstruccion)

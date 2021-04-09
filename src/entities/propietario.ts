@@ -1,6 +1,6 @@
 import { validateOrReject } from "class-validator";
 import { Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, PrimaryGeneratedColumn, BeforeInsert, Column, CreateDateColumn, Entity, BeforeUpdate } from "typeorm";
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { EntityStates } from "../enums/entity-states.enum";
 
 @ObjectType()
@@ -23,6 +23,7 @@ export class Propietario extends BaseEntity {
     @Column()
     email!: string;
 
+  
 
 
     // @OneToMany(type => Family, family => family.childhood)

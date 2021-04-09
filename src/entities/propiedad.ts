@@ -1,11 +1,12 @@
-import {Entity, Column, PrimaryGeneratedColumn,BaseEntity, CreateDateColumn, BeforeInsert, BeforeUpdate, ManyToMany, OneToMany} from 'typeorm';
-import { Field, Int, ObjectType} from "type-graphql";
 import { validateOrReject } from 'class-validator';
+import { Field, ObjectType } from "type-graphql";
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { EntityStates } from '../enums/entity-states.enum';
-import { TipoServicio } from './tipo-servicio';
-import { TipoBeneficio } from './tipo-beneficio';
 import { Categoria } from './categoria';
+import { Construccion } from './construccion';
 import { Foto } from './foto';
+import { TipoBeneficio } from './tipo-beneficio';
+import { TipoServicio } from './tipo-servicio';
 
 @ObjectType()
 @Entity()
@@ -30,6 +31,10 @@ export class Propiedad extends BaseEntity{
     @Field(()=>[Categoria])
     @ManyToMany(() => Categoria, categoria=> categoria.propiedades)
     categorias!:Categoria[]
+
+    @Field(()=>[Construccion])
+    @ManyToMany(() => Construccion, construccion=> construccion.propiedades)
+    construncciones!:Construccion[]
 
     @Field(() => [Foto] )
     @OneToMany(() => Foto, foto => foto.propiedad)
