@@ -1,25 +1,32 @@
-import {
-    Resolver,
-    Query,
-    Mutation,
-    Arg,
-    ObjectType,
-    UseMiddleware,
-    Field,
-    Ctx,
-    Int,
-    InputType,
-    Authorized
-} from "type-graphql";
-import { hash, compare } from "bcryptjs";
-import { Usuario} from "../entities/usuario";
-
-import enviroment from "../config/enviroments.config";
+import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
+import {
+    Arg,
 
-import { isAuthenticated } from "../middleware/is-authenticated";
-import { Context } from "../interfaces/context.interface";
+
+
+
+
+
+    Authorized, Ctx, Field,
+
+
+    InputType, Int, Mutation,
+
+    ObjectType, Query, Resolver,
+
+
+
+
+    UseMiddleware
+} from "type-graphql";
+import enviroment from "../config/enviroments.config";
+import { Usuario } from "../entities/usuario";
 import { RolesTypes } from "../enums/role-types.enum";
+import { Context } from "../interfaces/context.interface";
+import { isAuthenticated } from "../middleware/is-authenticated";
+
+
 
 @ObjectType()
 class LoginResponse {
@@ -94,13 +101,13 @@ export class UsuarioResolver {
         const usuario = await Usuario.findOne({ where: { email } });
 
         if (!usuario) {
-            throw new Error("Could not find usuario");
+            throw new Error("No se pudo encontrar el usuario");
         }
 
         const verify = await compare(password, usuario.password);
 
         if (!verify) {
-            throw new Error("Bad password");
+            throw new Error("Contraseña incorrecta");
         }
 
         return {
