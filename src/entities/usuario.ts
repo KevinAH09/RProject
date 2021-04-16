@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
-import { ObjectType, Field, ID, Authorized } from "type-graphql";
+import { Authorized, Field, ID, ObjectType } from "type-graphql";
+import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { RolesTypes } from "../enums/role-types.enum";
+import { Propiedad } from "./propiedad";
 
 @ObjectType()
 @Entity()
@@ -9,7 +10,7 @@ export class Usuario extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Authorized()
+    @Authorized([RolesTypes.ADMIN, RolesTypes.AGENTE])
     @Field(() => String)
     @Column("text", { nullable: true })
     nombre!: string;
@@ -26,8 +27,15 @@ export class Usuario extends BaseEntity {
     @Column("text", { nullable: true })
     password!: string;
 
+    @Field(()=>[Propiedad])
+    @ManyToMany(() => Propiedad, propiedad=> propiedad.usuario)
+    propiedadesRegistradas!:Propiedad[]
+
+
     @Authorized(RolesTypes.ADMIN)
     @Field(type => RolesTypes)
     @Column("text", { nullable: true })
     role!: RolesTypes;
 }
+
+

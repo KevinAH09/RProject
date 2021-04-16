@@ -1,13 +1,15 @@
 import { validateOrReject } from 'class-validator';
 import { Field, ObjectType } from "type-graphql";
-import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { EntityStates } from '../enums/entity-states.enum';
 import { Categoria } from './categoria';
 import { Construccion } from './construccion';
 import { Foto } from './foto';
+import { Localizacion } from './localizacion';
 import { Propietario } from './propietario';
 import { TipoBeneficio } from './tipo-beneficio';
 import { TipoServicio } from './tipo-servicio';
+import { Usuario } from './usuario';
 
 @ObjectType()
 @Entity()
@@ -38,8 +40,16 @@ export class Propiedad extends BaseEntity{
     construncciones!:Construccion[]
 
     @Field(()=>[Propietario])
-    @ManyToMany(() => Propietario, ropietario=> ropietario.propiedades)
+    @ManyToMany(() => Propietario, propietario=> propietario.propiedades)
     propietarios!:Propietario[]
+
+    @Field(()=>Localizacion)
+    @OneToOne(()=> Localizacion, localizacion => localizacion.propiedad)
+    localizacion!: Localizacion;
+    
+    @Field(()=>Usuario)
+    @ManyToOne(()=> Usuario, usuario => usuario.propiedadesRegistradas)    
+    usuario!: Usuario;
 
     @Field(() => [Foto] )
     @OneToMany(() => Foto, foto => foto.propiedad)

@@ -1,6 +1,8 @@
 import { validateOrReject } from "class-validator";
 import { Field, ObjectType } from "type-graphql";
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { EntityStates } from "../enums/entity-states.enum";
+import { Propiedad } from "./propiedad";
 
 
 @ObjectType()
@@ -10,23 +12,55 @@ export class Localizacion extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    // @Field(()=>[Propiedad])
-    // @ManyToMany(() => Propiedad, propiedad=> propiedad.servicios)
-    // propiedades!:Propiedad[]
+    @Field(() => String)
+    @Column("text", { nullable: true })
+    pais!: string;
 
-    // @ManyToOne(()=> TipoConstruccion, tipoConstruccion => tipoConstruccion.construcciones)
-    // @Field(()=>TipoConstruccion)
-    // tipoConstruccion!: TipoConstruccion;
+    @Field(() => String)
+    @Column("text", { nullable: true })
+    divPrimaria!: string;
 
+    @Field(() => String)
+    @Column("text", { nullable: true })
+    divSecundaria!: string;
+
+    @Field(() => String)
+    @Column("text", { nullable: true })
+    divTerciaria!: string;
+
+    @Field(() => String)
+    @Column("text", { nullable: true })
+    divCuaternaria!: string;
+
+    @Field(() => String)
+    @Column("text", { nullable: true })
+    direccion!: string;
+
+    @Field(() => String)
+    @Column("text", { nullable: true })
+    geolocalizacion!: string;
+ 
+    @Field(() => EntityStates)
+    @Column()
+    state!: EntityStates
+
+    @OneToOne(()=> Propiedad, propiedad => propiedad.localizacion)
+    @Field(()=>Propiedad)
+    propiedad!: Propiedad;
 
     @Field(() => String)
     @CreateDateColumn({ type: 'timestamp' })
     createdAt!: string
 
-    @Field()
-    @Column("text", { nullable: true })
-    pais!: string;
+    @Field(() => String)
+    @CreateDateColumn({ type: 'timestamp' })
+    updateAt!: string
 
+    @BeforeUpdate()
+    async beforeUpdate() {
+        this.updateAt = new Date().valueOf().toString()
+        await validateOrReject(this)
+    }
 
     @BeforeInsert()
     async beforeInsert() {
@@ -35,4 +69,5 @@ export class Localizacion extends BaseEntity {
     }
     
 }
+
 
