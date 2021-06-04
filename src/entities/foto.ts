@@ -20,8 +20,8 @@ export class Foto extends BaseEntity {
     @Column()
     base64!:string;
 
-    @ManyToOne(()=> Propiedad, propiedad => propiedad.fotos)
     @Field(()=>Propiedad)
+    @ManyToOne(()=> Propiedad, propiedad => propiedad.fotos)
     propiedad!: Propiedad;
 
     @Field(() => String)

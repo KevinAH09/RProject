@@ -1,6 +1,7 @@
 import { Authorized, Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { RolesTypes } from "../enums/role-types.enum";
+import { BitacoraSistema } from "./bitacora-sistema";
 import { Propiedad } from "./propiedad";
 
 @ObjectType()
@@ -31,6 +32,9 @@ export class Usuario extends BaseEntity {
     @ManyToMany(() => Propiedad, propiedad=> propiedad.usuario)
     propiedadesRegistradas!:Propiedad[]
 
+    @Field(() => [BitacoraSistema] )
+    @OneToMany(() => BitacoraSistema, bitacoraSistema => bitacoraSistema.usuario)
+    bitacoraSistema!: BitacoraSistema[];
 
     @Authorized(RolesTypes.ADMIN)
     @Field(type => RolesTypes)
