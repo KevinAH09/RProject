@@ -37,12 +37,15 @@ class LoginResponse {
 @InputType({ description: "Editable user information" })
 class UsuarioInput {
     @Field({ nullable: true })
-    nombre?: string
+    nombre!: string;
 
-    @Field()
-    notes!: string;
+    @Field({ nullable: true })
+    password!: string;
 
-    @Field()
+    @Field({ nullable: true })
+    email!: string;
+
+    @Field({ nullable: true })
     telefono!: string;
 
     @Field(type => RolesTypes)
@@ -77,17 +80,20 @@ export class UsuarioResolver {
 
     @Mutation(() => Boolean)
     async Register(
-        @Arg("nombre") nombre: string,
-        @Arg("email") email: string,
-        @Arg("password") password: string
+        // @Arg("nombre") nombre: string,
+        // @Arg("email") email: string,
+        // @Arg("password") password: string,
+        // @Arg("telefono") telefono: string,
+        @Arg("data", () => UsuarioInput) data: UsuarioInput
     ) {
-        const hashedPassword = await hash(password, 13);
+    
+        const hashedPassword = await hash(data.password, 13);
+
         try {
-            await Usuario.insert({
-                nombre,
-                email,
-                password: hashedPassword
-            });
+            data.password=hashedPassword;
+            await Usuario.insert(
+                data
+            );
         } catch (err) {
             console.log(err);
             return false;
@@ -95,6 +101,7 @@ export class UsuarioResolver {
 
         return true;
     }
+    
 
     @Mutation(() => LoginResponse)
     async Login(@Arg("email") email: string, @Arg("password") password: string) {
