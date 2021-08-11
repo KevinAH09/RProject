@@ -16,7 +16,7 @@ export class Usuario extends BaseEntity {
     @Column("text", { nullable: true })
     nombre!: string;
 
-    @Authorized([RolesTypes.ADMIN, RolesTypes.AGENTE])
+    @Authorized([RolesTypes.ADMIN])
     @Field(() => String)
     @Column("text", { nullable: true })
     telefono!: string;

@@ -107,6 +107,7 @@ export class UsuarioResolver {
     async Login(@Arg("email") email: string, @Arg("password") password: string) {
         const usuario = await Usuario.findOne({ where: { email } });
 
+
         if (!usuario) {
             throw new Error("No se pudo encontrar el usuario");
         }

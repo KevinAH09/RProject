@@ -23,18 +23,25 @@ export const isAuthorizated: AuthChecker<Context> = ({ context }, roles) => {
         throw new Error("Not authenticated");
     }
 
-    const user = context.usuario;
+    const userContext = context.usuario;
+    const userString =JSON.stringify(userContext);
+    const user=JSON.parse(userString);
+    const rol=user.usuario.role;
+
     if (roles.length === 0) {
+        console.log("1");
         // if `@Authorized()`, check only if user exists
         return user !== undefined;
     }
     // there are some roles defined now
 
     if (!user) {
+        console.log("2");
         // and if no user, restrict access
         return false;
     }
-    if (roles.includes(user.role)) {
+    if (roles.includes(rol)) {
+        console.log("Entro");
         // grant access if the roles overlap
         return true;
     }
