@@ -55,10 +55,17 @@ class UsuarioInput {
 
 @Resolver()
 export class UsuarioResolver {
+
     @Query(() => [Usuario])
     async users() {
         return Usuario.find();
     }
+    
+    @Query(() => Usuario)
+    async UsuarioById(@Arg("id", () => Int) id: number) {
+        return Usuario.findOne({where: {id}});
+    }
+
     @Authorized("ADMIN")
     @Mutation(() => Usuario)
     async updateUser(
